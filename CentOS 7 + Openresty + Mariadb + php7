@@ -127,9 +127,14 @@ opcache.fast_shutdown=1
 
 vi /usr/local/php/etc/php-fpm.conf 
 pid = run/php-fpm.pid
+
+mv /usr/local/php/etc/php-fpm.d/www.conf.default /usr/local/php/etc/php-fpm.d/www.conf
+vi /usr/local/php/etc/php-fpm.d/www.conf
 user = www 
 group = www
 
+slowlog = /var/log/php-fpm.log.slow
+request_slowlog_timeout = 10s
 
 #cp /usr/local/src/php-7.1.0/sapi/fpm/init.d.php-fpm /etc/rc.d/init.d/php-fpm &&
 #chmod +x /etc/rc.d/init.d/php-fpm &&
@@ -137,12 +142,40 @@ group = www
 
 [nginx<--->php]
 
-location ~ \.php\$ {
-root html;
-fastcgi_pass 127.0.0.1:9000;
-fastcgi_index index.php;
-fastcgi_param SCRIPT_FILENAME /usr/local/openresty/nginx/html$fastcgi_script_name;
-include fastcgi_params;
+server {
+        listen       80;
+        server_name  server_domain_name_or_IP;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        root   /usr/local/www;
+        index  index.php index.html index.htm;
+
+
+        location / {
+            try_files $uri $uri/ =404;
+        }
+
+	error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/local/openresty/nginx/html;
+        }
+
+        # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+        #
+        location ~ \.php$ {
+	    try_files $uri =404;
+	    fastcgi_pass 127.0.0.1:9000;
+            fastcgi_index index.php;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            include fastcgi_params;
+        }
 }
 
 根目录： /usr/local/openresty/nginx/html/ 
