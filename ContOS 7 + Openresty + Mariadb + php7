@@ -9,18 +9,11 @@ make install
 
 
 [Mariadb--->SWAP]
-①使用dd命令创建一个swap分区
 dd if=/dev/zero of=/home/swap bs=1024 count=1048576
-count的值是：size（多少M）* 1024，我这里设置的1G虚拟内存，也就是count=1024000.
-②格式化swap分区
 mkswap /home/swap
-③把格式化后的文件分区设置为swap分区
 swapon /home/swap
-(关闭SWAP分区swapoff /home/swap)
-此时，swap分区已经创建好了，使用free命令查看，可见多了一个挂载分区。
-④swap分区自动挂载
+(swapoff /home/swap)
 vi /etc/fstab
-在文件末尾加上
 /home/swap swap swap default 0 0
 
 [mariadb]
