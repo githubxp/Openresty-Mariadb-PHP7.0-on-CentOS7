@@ -1,0 +1,162 @@
+yum -y install libxml2 libxml2-devel openssl curl-devel libjpeg-devel libpng-devel freetype-devel libmcrypt-devel
+yum install -y apr* autoconf automake bison bzip2 bzip2* cloog-ppl cmake compat* cpp curl curl-devel fontconfig fontconfig-devel freetype freetype* freetype-devel gcc gcc-c++ gtk+-devel gd gettext gettext-devel glibc kernel kernel-headers keyutils keyutils-libs-devel krb5-devel libcom_err-devel libpng libpng-devel libjpeg* libsepol-devel libselinux-devel libstdc++-devel libtool* libgomp libxml2 libxml2-devel libXpm* libtiff libtiff* make mpfr ncurses* ntp openssl openssl-devel patch pcre-devel perl php-common php-gd policycoreutils telnet t1lib t1lib* nasm nasm* zlib-devel gd-devel 
+
+[openresty]
+wget https://openresty.org/download/openresty-1.11.2.1.tar.gz
+./configure 
+make
+make install
+
+
+[Mariadb--->SWAP]
+①使用dd命令创建一个swap分区
+dd if=/dev/zero of=/home/swap bs=1024 count=1048576
+count的值是：size（多少M）* 1024，我这里设置的1G虚拟内存，也就是count=1024000.
+②格式化swap分区
+mkswap /home/swap
+③把格式化后的文件分区设置为swap分区
+swapon /home/swap
+(关闭SWAP分区swapoff /home/swap)
+此时，swap分区已经创建好了，使用free命令查看，可见多了一个挂载分区。
+④swap分区自动挂载
+vi /etc/fstab
+在文件末尾加上
+/home/swap swap swap default 0 0
+
+[mariadb]
+wget https://mirrors.tuna.tsinghua.edu.cn/mariadb//mariadb-10.1.17/source/mariadb-10.1.17.tar.gz
+cmake . -DCMAKE_INSTALL_PREFIX=/usr/local/mysql
+make
+make install
+
+mv /etc/my.cnf /etc/my.cnf.bak
+
+cd /usr/local/mysql
+./scripts/mysql_install_db --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data
+
+##ln -s /usr/local/mysql/my.cnf /etc/my.cnf
+##cp ./support-files/mysql.server /etc/rc.d/init.d/mysqld &&
+##chmod 755 /etc/init.d/mysqld &&
+##chkconfig mysqld on
+
+
+###############################################################
+To start mysqld at boot time you have to copy
+support-files/mysql.server to the right place for your system
+
+PLEASE REMEMBER TO SET A PASSWORD FOR THE MariaDB root USER !
+To do so, start the server, then issue the following commands:
+
+'/usr/local/mysql/bin/mysqladmin' -u root password 'new-password'
+'/usr/local/mysql/bin/mysqladmin' -u root -h iZ23betjdxaZ password 'new-password'
+
+Alternatively you can run:
+'/usr/local/mysql/bin/mysql_secure_installation'
+
+You can start the MariaDB daemon with:
+cd '/usr/local/mysql' ; /usr/local/mysql/bin/mysqld_safe --datadir='/usr/local/mysql/data' &
+
+You can test the MariaDB daemon with mysql-test-run.pl
+cd '/usr/local/mysql/mysql-test' ; perl mysql-test-run.pl
+
+###########################################################
+
+
+
+[PHP]
+
+wget http://cn2.php.net/distributions/php-7.0.11.tar.gz
+
+./configure --prefix=/usr/local/php \
+--with-config-file-path=/usr/local/php/etc \
+--with-mysqli=/usr/local/mysql/bin/mysql_config \
+--with-mysql-sock=/tmp/mysql.sock \
+--with-pdo-mysql=/usr/local/mysql \
+--with-gd \
+--with-png-dir=/usr/local/libpng \
+--with-jpeg-dir=/usr/local/jpeg \
+--with-freetype-dir=/usr/local/freetype \
+--with-xpm-dir=/usr/ \
+--with-zlib-dir=/usr/local/zlib \
+--with-iconv \
+--enable-libxml \
+--enable-xml \
+--enable-bcmath \
+--enable-shmop \
+--enable-sysvsem \
+--enable-inline-optimization \
+--enable-opcache \
+--enable-mbregex \
+--enable-fpm \
+--enable-mbstring \
+--enable-ftp \
+--enable-gd-native-ttf \
+--with-openssl \
+--enable-pcntl \
+--enable-sockets \
+--with-xmlrpc \
+--enable-zip \
+--enable-soap \
+--without-pear \
+--with-gettext \
+--enable-session \
+--with-mcrypt \
+--with-curl \
+--enable-exif \
+--enable-ctype
+
+make
+make install
+
+cp php.ini-production /usr/local/php/etc/php.ini
+mv /etc/php.ini /etc/php.ini.bak
+ln -s /usr/local/php/etc/php.ini /etc/php.ini
+cp /usr/local/php/etc/php-fpm.conf.default  /usr/local/php/etc/php-fpm.conf
+ln -s /usr/local/php/etc/php-fpm.conf /etc/php-fpm.conf
+
+vi /usr/local/php/etc/php.ini
+disable_functions = passthru,exec,system,chroot,scandir,chgrp,chown,shell_exec,proc_open,proc_get_status,ini_alter,ini_alter,ini_restore,dl,openlog,syslog,readlink,symlink,popepassthru,stream_socket_server,escapeshellcmd,dll,popen,disk_free_space,checkdnsrr,checkdnsrr,getservbyname,getservbyport,disk_total_space,posix_ctermid,posix_get_last_error,posix_getcwd, posix_getegid,posix_geteuid,posix_getgid, posix_getgrgid,posix_getgrnam,posix_getgroups,posix_getlogin,posix_getpgid,posix_getpgrp,posix_getpid, posix_getppid,posix_getpwnam,posix_getpwuid, posix_getrlimit, posix_getsid,posix_getuid,posix_isatty, posix_kill,posix_mkfifo,posix_setegid,posix_seteuid,posix_setgid, posix_setpgid,posix_setsid,posix_setuid,posix_strerror,posix_times,posix_ttyname,posix_uname
+
+
+expose_php = Off 
+date.timezone = Asia/Shanghai
+short_open_tag 
+Default Value: On 
+Development Value: Off 
+Production Value: Off 
+opcache.enable=1
+opcache.enable_cli=1
+opcache.memory_consumption=64
+opcache.interned_strings_buffer=4
+opcache.max_accelerated_files=2000
+opcache.revalidate_freq=2
+opcache.fast_shutdown=1
+
+vi /usr/local/php/etc/php-fpm.conf 
+pid = run/php-fpm.pid
+user = www 
+group = www
+
+
+#cp /usr/local/src/php-7.1.0/sapi/fpm/init.d.php-fpm /etc/rc.d/init.d/php-fpm &&
+#chmod +x /etc/rc.d/init.d/php-fpm &&
+#chkconfig php-fpm on
+
+[nginx<--->php]
+
+location ~ \.php\$ {
+root html;
+fastcgi_pass 127.0.0.1:9000;
+fastcgi_index index.php;
+fastcgi_param SCRIPT_FILENAME /usr/local/openresty/nginx/html$fastcgi_script_name;
+include fastcgi_params;
+}
+
+根目录： /usr/local/openresty/nginx/html/ 
+Nginx配置文件： /usr/local/openresty/nginx/conf/nginx.conf 
+PHP配置文件： /usr/local/php/etc/php.ini 
+PHP默认拓展文件夹：/usr/lib64/php/modules/ 
+PHP拓展可放置于：/usr/local/php/lib/php/extensions/no-debug-non-zts-20151012 
+MySQL配置文件： /etc/my.cnf 
+MySQL程序安装路径： basedir=/usr/local/mysql 
+MySQl数据库存放目录： datadir=/usr/local/mysql/data
