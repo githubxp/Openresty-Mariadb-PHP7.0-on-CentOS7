@@ -142,6 +142,17 @@ request_slowlog_timeout = 10s
 #chmod +x /etc/rc.d/init.d/php-fpm &&
 #chkconfig php-fpm on
 
+[php-pthreads]
+wget http://pecl.php.net/get/pthreads-3.1.6.tgz
+tar -xzvf pthreads-3.1.6.tgz
+cd pthreads-3.1.6/
+/usr/local/php/bin/phpize
+./configure --with-php-config=/usr/local/php/bin/php-config
+make
+make install
+vi php-cli.ini ++ extension=/usr/local/php/lib/php/extensions/no-debug-zts-20151012/pthreads.so
+
+
 [nginx<--->php]
 
 server {
