@@ -26,7 +26,7 @@ vi /etc/fstab
 /home/swap swap swap default 0 0
 
 [mariadb]
-wget https://mirrors.tuna.tsinghua.edu.cn/mariadb//mariadb-10.1.17/source/mariadb-10.1.17.tar.gz
+wget https://mirrors.tuna.tsinghua.edu.cn/mariadb//mariadb-10.1.17/source/mariadb-10.1.26.tar.gz
 cmake . -DCMAKE_INSTALL_PREFIX=/usr/local/mysql
 make
 make install
