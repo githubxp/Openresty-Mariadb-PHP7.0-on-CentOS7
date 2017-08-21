@@ -267,6 +267,7 @@ group = www
 
 slowlog = /var/log/php-fpm.log.slow
 request_slowlog_timeout = 10s
+request_terminate_timeout = 20s
 
 #cp /usr/local/src/php-7.1.0/sapi/fpm/init.d.php-fpm /etc/rc.d/init.d/php-fpm &&
 #chmod +x /etc/rc.d/init.d/php-fpm &&
