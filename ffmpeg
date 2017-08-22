@@ -122,7 +122,7 @@ cd speex-1.2.0
 ./configure -prefix="$HOME/ffmpeg_build"
 make
 make install
-ln -s /root/ffmpeg_build/lib/libspeex.so.1 /lib64/libspeex.so.1
+ln -s /usr/local/lib/libspeex.so.1 /lib64/libspeex.so.1
 
 [libass]
 yum install libass-devel.x86_64
