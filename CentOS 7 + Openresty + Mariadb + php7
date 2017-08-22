@@ -202,6 +202,14 @@ make && make install
 
 extension=memcached.so >> php.ini
 
+[phpredis]
+git clone https://github.com/phpredis/phpredis.git
+cd phpredis/
+git checkout php7
+/usr/local/php/bin/phpize 
+./configure --with-php-config=/usr/local/php/bin/php-config
+make && make install
+
 [nginx<--->php]
 
 server {
