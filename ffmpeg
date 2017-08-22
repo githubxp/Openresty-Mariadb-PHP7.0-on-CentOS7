@@ -114,16 +114,6 @@ echo
 ;make install
 ;echo
 
-[speex]
-cd ~/ffmpeg_sources
-wget http://downloads.us.xiph.org/releases/speex/speex-1.2.0.tar.gz
-tar -xzvf speex-1.2.0.tar.gz
-cd speex-1.2.0
-./configure -prefix="$HOME/ffmpeg_build"
-make
-make install
-ln -s /usr/local/lib/libspeex.so.1 /lib64/libspeex.so.1
-
 [libass]
 yum install libass-devel.x86_64
 
