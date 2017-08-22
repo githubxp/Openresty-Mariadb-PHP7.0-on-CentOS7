@@ -67,7 +67,7 @@ cd '/usr/local/mysql/mysql-test' ; perl mysql-test-run.pl
 
 [PHP]
 
-wget http://cn2.php.net/distributions/php-7.0.11.tar.gz
+wget http://cn2.php.net/distributions/php-7.0.22.tar.gz
 
 ./configure --prefix=/usr/local/php \
 --with-config-file-path=/usr/local/php/etc \
@@ -179,6 +179,28 @@ make
 make install
 
 extension=event.so >> php.ini
+
+[memcached]
+wget https://launchpad.net/libmemcached/1.0/1.0.18/+download/libmemcached-1.0.18.tar.gz
+tar -zxvf libmemcached-1.0.18.tar.gz
+cd libmemcached-1.0.18/
+./configure
+make && make install
+
+wget http://memcached.org/files/memcached-1.5.0.tar.gz
+tar -xzvf memcached-1.5.0.tar.gz
+cd memcached-1.5.0
+./configure --prefix=/usr/local/memcached
+make && make install
+
+wget http://pecl.php.net/get/memcached-3.0.3.tgz
+tar -xzvf memcached-3.0.3.tgz 
+cd memcached-3.0.3
+/usr/local/php/bin/phpize
+./configure --enable-memcached --enable-memcached-json --with-php-config=/usr/local/php/bin/php-config
+make && make install
+
+extension=memcached.so >> php.ini
 
 [nginx<--->php]
 
