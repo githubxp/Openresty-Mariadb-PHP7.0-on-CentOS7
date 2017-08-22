@@ -161,6 +161,24 @@ make
 make install
 vi php-cli.ini ++ extension=/usr/local/php/lib/php/extensions/no-debug-zts-20151012/pthreads.so
 
+[php + event]
+yum install libevent-devel
+wget https://github.com/libevent/libevent/releases/download/release-2.1.8-stable/libevent-2.1.8-stable.tar.gz
+tar -zxvf libevent-2.1.8-stable.tar.gz
+cd libevent-2.1.8-stable/
+./configure --prefix=/usr/local/libevent
+make 
+make install
+libtool --finish /usr/local/lib
+
+wget http://pecl.php.net/get/event-2.3.0.tgz
+tar -xzvf event-2.3.0.tgz
+/usr/local/php/bin/phpize
+./configure --with-php-config=/usr/local/php/bin/php-config --with-event-libevent-dir=/usr/local/libevent/
+make
+make install
+
+extension=event.so >> php.ini
 
 [nginx<--->php]
 
