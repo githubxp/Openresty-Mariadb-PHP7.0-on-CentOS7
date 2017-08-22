@@ -134,8 +134,7 @@ PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure --prefix="$HOME/f
   --enable-libx264 \
   --enable-libx265 \
   --enable-nonfree \
-  --enable-libass \
-  --enable-libspeex
+  --enable-libass
 make
 make install
 hash -r
