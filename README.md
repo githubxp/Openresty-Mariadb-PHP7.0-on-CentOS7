@@ -1,3 +1,3 @@
-INSTALL & CONFIG
+#INSTALL & CONFIG
 
-Openresty + Mariadb + php7.0 on CentOS 7
+##Openresty + Mariadb + php7.0 on CentOS 7
