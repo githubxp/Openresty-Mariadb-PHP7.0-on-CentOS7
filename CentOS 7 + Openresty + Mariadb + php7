@@ -256,3 +256,10 @@ PHP拓展可放置于：/usr/local/php/lib/php/extensions/no-debug-non-zts-20151
 MySQL配置文件： /etc/my.cnf 
 MySQL程序安装路径： basedir=/usr/local/mysql 
 MySQl数据库存放目录： datadir=/usr/local/mysql/data
+
+
+===============
+chkconfig --add nginx
+chkconfig --add php-fpm 
+chkconfig --list
+
