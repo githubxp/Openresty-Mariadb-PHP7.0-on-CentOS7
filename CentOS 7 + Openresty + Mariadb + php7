@@ -262,4 +262,18 @@ MySQl数据库存放目录： datadir=/usr/local/mysql/data
 chkconfig --add nginx
 chkconfig --add php-fpm 
 chkconfig --list
+===============
+[PHP-FPM]
+rlimit_files = 100000
+rlimit_core = 100000
 
+[/etc/security/limits.conf]
+# End of file
+* soft nproc 655350
+* hard nproc 655350
+* soft nofile 655350
+* hard nofile 655350
+
+[/etc/security/limits.d/20-nproc.conf]
+*          soft    nproc     65535
+root       soft    nproc     unlimited
