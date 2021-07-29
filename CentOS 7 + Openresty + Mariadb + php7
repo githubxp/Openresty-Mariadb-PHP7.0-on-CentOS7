@@ -65,10 +65,45 @@ cd '/usr/local/mysql/mysql-test' ; perl mysql-test-run.pl
 
 
 
-[PHP]
+[PHP 7.4]
 
-wget http://cn2.php.net/distributions/php-7.0.23.tar.gz
+yum install sqlite-devel -y
 
+./configure --prefix=/usr/local/php \
+--with-config-file-path=/usr/local/php/etc \
+--with-mysqli \
+--with-pdo-mysql \
+--with-zlib-dir \
+--with-iconv \
+--enable-xml \
+--enable-bcmath \
+--enable-shmop \
+--enable-sysvsem \
+--enable-inline-optimization \
+--enable-opcache \
+--enable-mbregex \
+--enable-fpm \
+--enable-ftp \
+--with-openssl \
+--enable-pcntl \
+--enable-sockets \
+--with-xmlrpc \
+--enable-soap \
+--without-pear \
+--with-gettext \
+--enable-session \
+--with-curl \
+--enable-exif \
+--enable-ctype \
+
+cd PHPDIR/ext/gd/
+/usr/local/php/bin/phpize
+./configure --with-php-config=/usr/local/php/bin/php-config --with-freetype --with-jpeg --enable-gd
+make
+make install
+
+
+[PHP 7.0]
 ./configure --prefix=/usr/local/php \
 --with-config-file-path=/usr/local/php/etc \
 --with-mysqli=/usr/local/mysql/bin/mysql_config \
@@ -90,7 +125,6 @@ wget http://cn2.php.net/distributions/php-7.0.23.tar.gz
 --enable-opcache \
 --enable-mbregex \
 --enable-fpm \
---enable-mbstring \
 --enable-ftp \
 --enable-gd-native-ttf \
 --with-openssl \
@@ -108,10 +142,10 @@ wget http://cn2.php.net/distributions/php-7.0.23.tar.gz
 --enable-ctype \
 --enable-maintainer-zts
 
-
 make
 make install
 
+-------------------------------------------------
 cp php.ini-production /usr/local/php/etc/php.ini
 mv /etc/php.ini /etc/php.ini.bak
 ln -s /usr/local/php/etc/php.ini /etc/php.ini
