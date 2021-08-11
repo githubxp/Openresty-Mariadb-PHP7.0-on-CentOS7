@@ -63,7 +63,7 @@ cd '/usr/local/mysql/mysql-test' ; perl mysql-test-run.pl
 
 ###########################################################
 
-
+yum install oniguruma
 
 [PHP 7.4]
 
@@ -82,6 +82,7 @@ yum install sqlite-devel -y
 --enable-inline-optimization \
 --enable-opcache \
 --enable-mbregex \
+--enable-mbstring \
 --enable-fpm \
 --enable-ftp \
 --with-openssl \
