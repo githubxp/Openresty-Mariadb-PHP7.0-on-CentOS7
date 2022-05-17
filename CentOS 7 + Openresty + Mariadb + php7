@@ -3,7 +3,8 @@ yum -y install libxml2 libxml2-devel openssl openssl-devel curl-devel libjpeg-de
 
 yum install -y apr* autoconf automake bison bzip2 bzip2* cloog-ppl cmake cpp curl curl-devel fontconfig fontconfig-devel freetype freetype* freetype-devel gcc gcc-c++ gtk+-devel gd gettext gettext-devel glibc kernel kernel-headers keyutils keyutils-libs-devel krb5-devel libcom_err-devel libpng libpng-devel libjpeg* libsepol-devel libselinux-devel libstdc++-devel libtool* libgomp libxml2 libxml2-devel libXpm* libtiff libtiff* make mpfr ncurses* ntp openssl openssl-devel patch pcre-devel perl php-common php-gd policycoreutils telnet t1lib t1lib* nasm nasm* zlib-devel gd-devel 
 
-useradd www
+groupadd www -g 1199
+useradd www -u 1199 -g www -s /sbin/nologin
 
 [openresty]
 cd ~
