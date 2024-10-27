@@ -9,18 +9,15 @@ apt install git build-essential libxml2-dev pkg-config libssl-dev libsqlite3-dev
 --enable-bcmath \
 --enable-shmop \
 --enable-sysvsem \
---enable-inline-optimization \
 --enable-opcache \
 --enable-mbregex \
 --enable-mbstring \
 --with-openssl \
 --enable-pcntl \
---enable-sockets\ 
---with-xmlrpc \
 --enable-soap \
 --without-pear \
 --with-gettext \
---enable-session\
+--enable-session \
 --with-curl \
---enable-exif\
---enable-ctype\
+--enable-exif \
+--enable-ctype \
