@@ -6,7 +6,6 @@ apt install git build-essential libxml2-dev pkg-config libssl-dev libsqlite3-dev
 --with-zlib-dir \
 --with-iconv \
 --enable-xml \
---enable-fpm \
 --enable-bcmath \
 --enable-shmop \
 --enable-sysvsem \
