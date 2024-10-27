@@ -1,4 +1,4 @@
-apt install git build-essential libxml2-dev pkg-config libssl-dev libsqlite3-dev libcurl4-openssl-dev libonig-dev zlib1g-dev libbrotli-dev libpng-dev libjpeg-dev libfreetype-dev
+apt install git build-essential libxml2-dev pkg-config libssl-dev libsqlite3-dev libcurl4-openssl-dev libonig-dev zlib1g-dev libbrotli-dev libpng-dev libjpeg-dev libfreetype-dev libzip-dev
 
 ./configure --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc \
 --with-mysqli \
